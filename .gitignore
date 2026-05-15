@@ -31,6 +31,8 @@ Thumbs.db
 # 测试缓存
 .hypothesis/
 
-# Kiro 工具内部配置
-.kiro/
+# Kiro 工具内部配置（只提交 specs 文档，排除内部配置文件）
+.kiro/*
+!.kiro/specs/
+.kiro/specs/**/.config.kiro
 
