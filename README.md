@@ -1,6 +1,6 @@
 # MSP Ticket Extension
 
-一个 Chrome 浏览器插件 + Python 后端，用于快速将 MSP 工单信息提交至飞书多维表格，并通过 AWS Bedrock（Claude）自动生成任务名称、根因分析、解决步骤等结构化字段。
+一个 Chrome 浏览器插件 + Python 后端，用于快速将 MSP 工单信息提交至飞书多维表格，只需提交用户问题、原因及措施，即可通过 AWS Bedrock（Claude）自动生成任务名称、根因分析、解决步骤等结构化字段。
 
 ## 功能
 
@@ -78,23 +78,3 @@ python -m backend.app
 3. 点击「加载已解压的扩展程序」，选择 `extension/` 目录
 4. 点击插件图标，在弹窗中填写后端地址和 API Key 后即可使用
 
-## 飞书应用配置
-
-需在[飞书开放平台](https://open.feishu.cn/)创建企业自建应用，并开通以下权限：
-
-- `bitable:app` — 多维表格读写
-- `contact:user.id:readonly` — 通过邮箱查询用户
-
-## 运行测试
-
-```bash
-cd /path/to/project
-pytest backend/tests/
-```
-
-## 环境要求
-
-- Python 3.12+
-- Chrome 浏览器
-- 飞书企业自建应用
-- AWS Bedrock 访问权限
