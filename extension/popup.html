@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MSP工单记录</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>MSP工单记录</h1>
+    <form id="submitForm">
+      <div class="field-group">
+        <label for="creatorPrefix">创建人</label>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <input type="text" id="creatorPrefix" name="creatorPrefix" placeholder="请输入邮箱前缀" style="flex:1;" />
+          <span>@cloudsway.com</span>
+        </div>
+        <span class="error-msg" id="creatorPrefix-error" style="display:none;"></span>
+      </div>
+      <div class="field-group">
+        <label for="userIssue">问题</label>
+        <textarea id="userIssue" name="userIssue" placeholder="请描述问题"></textarea>
+        <span class="error-msg" id="userIssue-error" style="display:none;"></span>
+      </div>
+      <div class="field-group">
+        <label for="issueCause">原因及措施</label>
+        <textarea id="issueCause" name="issueCause" placeholder="请描述原因及措施"></textarea>
+        <span class="error-msg" id="issueCause-error" style="display:none;"></span>
+      </div>
+      <div id="loadingIndicator" style="display:none;">提交中，请稍候...</div>
+      <div id="statusMessage" style="display:none;"></div>
+      <button type="button" id="submitBtn">提交</button>
+    </form>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

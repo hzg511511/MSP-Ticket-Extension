@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MSP工单记录</title>
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>MSP工单记录</h1>
+    <form id="submitForm">
+      <div class="field-group">
+        <label for="serverUrl">服务器地址</label>
+        <input type="text" id="serverUrl" name="serverUrl" placeholder="如 http://192.168.1.1:5000 或 https://example.com" />
+        <span class="error-msg" id="serverUrl-error" style="display:none;"></span>
+      </div>
+      <div class="field-group">
+        <label for="apiKey">API Key</label>
+        <input type="password" id="apiKey" name="apiKey" placeholder="请输入 API Key" />
+        <span class="error-msg" id="apiKey-error" style="display:none;"></span>
+      </div>
+      <div class="field-group">
+        <label for="creatorPrefix">创建人</label>
+        <div class="email-input">
+          <input type="text" id="creatorPrefix" name="creatorPrefix" placeholder="邮箱前缀" />
+          <span>@cloudsway.com</span>
+        </div>
+        <span class="error-msg" id="creatorPrefix-error" style="display:none;"></span>
+      </div>
+      <div class="field-group">
+        <label for="customerName">客户名称</label>
+        <input type="text" id="customerName" name="customerName" placeholder="请输入客户名称" />
+        <span class="error-msg" id="customerName-error" style="display:none;"></span>
+      </div>
+      <div class="field-group">
+        <label for="customerType">客户类型</label>
+        <select id="customerType" name="customerType">
+          <option value="">请选择</option>
+          <option value="转售">转售</option>
+          <option value="PLES">PLES</option>
+          <option value="托管运维">托管运维</option>
+          <option value="专项服务">专项服务</option>
+        </select>
+        <span class="error-msg" id="customerType-error" style="display:none;"></span>
+      </div>
+      <div class="field-group">
+        <label for="userIssue">问题</label>
+        <textarea id="userIssue" name="userIssue" placeholder="请描述问题"></textarea>
+        <span class="error-msg" id="userIssue-error" style="display:none;"></span>
+      </div>
+      <div class="field-group">
+        <label for="issueCause">原因及措施</label>
+        <textarea id="issueCause" name="issueCause" placeholder="请描述原因及措施"></textarea>
+        <span class="error-msg" id="issueCause-error" style="display:none;"></span>
+      </div>
+      <div id="loadingIndicator" style="display:none;">提交中，请稍候...</div>
+      <div id="statusMessage" style="display:none;"></div>
+      <button type="button" id="submitBtn">提交</button>
+    </form>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

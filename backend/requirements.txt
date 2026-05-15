@@ -1,0 +1,8 @@
+# 生产依赖
+flask==3.0.3
+python-dotenv==1.0.1
+requests==2.32.3
+
+# 测试依赖
+pytest==8.2.2
+hypothesis==6.103.1
