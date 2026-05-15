@@ -2,7 +2,7 @@
 
 一个 Chrome 浏览器插件 + Python 后端，用于快速将 MSP 工单信息提交至飞书多维表格，只需提交用户问题、原因及措施，即可通过 AWS Bedrock（Claude）自动生成任务名称、根因分析、解决步骤等结构化字段。
 
-![插件截图](assets/screenshot.png)
+<img src="assets/screenshot.png" width="400" alt="插件截图">
 
 ## 功能
 
