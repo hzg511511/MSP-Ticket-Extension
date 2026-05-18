@@ -3,6 +3,7 @@
 from flask import Flask, jsonify, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from limits.storage import MemoryStorage
 from backend.config import server
 from backend.routes.submit import submit_bp
 from backend.services.bitable_meta import load_multiselect_fields
@@ -13,10 +14,11 @@ logger = get_logger("app")
 app = Flask(__name__)
 
 limiter = Limiter(
-    app,
     key_func=get_remote_address,
+    app=app,
     default_limits=[server.rate_limit],
     headers_enabled=True,
+    storage_uri="memory://",
 )
 
 
