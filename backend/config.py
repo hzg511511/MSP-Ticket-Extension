@@ -31,6 +31,7 @@ class BedrockConfig:
 class ServerConfig:
     port: int         # 服务端口，默认 5000
     api_key: str      # 插件请求鉴权 Key（环境变量 API_KEY）
+    rate_limit: str   # 请求频率限制（环境变量 RATE_LIMIT，默认 60/minute）
 
 
 def _require_env(name: str) -> str:
@@ -70,7 +71,8 @@ def _load_server_config() -> ServerConfig:
         raise EnvironmentError(
             f"环境变量 'PORT' 的值 '{port_str}' 不是有效的整数。"
         )
-    return ServerConfig(port=port, api_key=api_key)
+    rate_limit = os.environ.get("RATE_LIMIT", "60/minute")
+    return ServerConfig(port=port, api_key=api_key, rate_limit=rate_limit)
 
 
 def _load_bedrock_config() -> BedrockConfig:

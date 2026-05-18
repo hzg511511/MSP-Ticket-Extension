@@ -11,17 +11,17 @@
     <h1>MSP工单记录</h1>
     <form id="submitForm">
       <div class="field-group">
-        <label for="serverUrl">服务器地址</label>
+        <label for="serverUrl" class="required">服务器地址</label>
         <input type="text" id="serverUrl" name="serverUrl" placeholder="如 http://192.168.1.1:5000 或 https://example.com" />
         <span class="error-msg" id="serverUrl-error" style="display:none;"></span>
       </div>
       <div class="field-group">
-        <label for="apiKey">API Key</label>
+        <label for="apiKey" class="required">API Key</label>
         <input type="password" id="apiKey" name="apiKey" placeholder="请输入 API Key" />
         <span class="error-msg" id="apiKey-error" style="display:none;"></span>
       </div>
       <div class="field-group">
-        <label for="creatorPrefix">创建人</label>
+        <label for="creatorPrefix" class="required">创建人</label>
         <div class="email-input">
           <input type="text" id="creatorPrefix" name="creatorPrefix" placeholder="邮箱前缀" />
           <span>@cloudsway.com</span>
@@ -34,7 +34,7 @@
         <span class="error-msg" id="customerName-error" style="display:none;"></span>
       </div>
       <div class="field-group">
-        <label for="customerType">客户类型</label>
+        <label for="customerType" class="required">客户类型</label>
         <select id="customerType" name="customerType">
           <option value="">请选择</option>
           <option value="转售">转售</option>
@@ -45,12 +45,12 @@
         <span class="error-msg" id="customerType-error" style="display:none;"></span>
       </div>
       <div class="field-group">
-        <label for="userIssue">问题</label>
+        <label for="userIssue" class="required">问题</label>
         <textarea id="userIssue" name="userIssue" placeholder="请描述问题"></textarea>
         <span class="error-msg" id="userIssue-error" style="display:none;"></span>
       </div>
       <div class="field-group">
-        <label for="issueCause">原因及措施</label>
+        <label for="issueCause" class="required">原因及措施</label>
         <textarea id="issueCause" name="issueCause" placeholder="请描述原因及措施"></textarea>
         <span class="error-msg" id="issueCause-error" style="display:none;"></span>
       </div>

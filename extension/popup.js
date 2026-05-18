@@ -89,7 +89,11 @@ async function submitForm(formData) {
       }
     } else {
       const data = await resp.json().catch(() => ({}));
-      showError(data.message || `提交失败（${resp.status}）`);
+      if (resp.status === 429) {
+        showError('请求过于频繁，请稍后再试');
+      } else {
+        showError(data.error || data.message || `提交失败（${resp.status}）`);
+      }
     }
   } catch (err) {
     clearTimeout(timer);

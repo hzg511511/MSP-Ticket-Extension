@@ -6,6 +6,9 @@ from backend.services.bitable import create_record
 from backend.services.feishu_user import get_open_id_by_email
 from backend.services.bedrock import generate_fields
 from backend.services.bitable_meta import multiselect_fields
+from backend.logger import get_logger
+
+logger = get_logger("submit")
 
 submit_bp = Blueprint("submit", __name__)
 
@@ -18,6 +21,7 @@ def submit():
 
     missing = [f for f in REQUIRED_FIELDS if not str(body.get(f, "")).strip()]
     if missing:
+        logger.warning("VALIDATION_ERROR from %s, missing fields: %s", request.remote_addr, missing)
         return jsonify({"success": False, "error": "VALIDATION_ERROR", "fields": missing}), 400
 
     try:
@@ -25,17 +29,19 @@ def submit():
     except RuntimeError as e:
         err = str(e)
         if "USER_NOT_FOUND" in err:
+            logger.warning("USER_NOT_FOUND for email: %s", body["creatorEmail"])
             return jsonify({"success": False, "error": err}), 400
+        logger.error("feishu_user error: %s", err)
         return jsonify({"success": False, "error": err}), 502
 
     task_detail = format_task_detail(body["customerName"], body["userIssue"], body["issueCause"])
 
     try:
         generated = generate_fields(body["userIssue"], body["issueCause"], multiselect_fields)
-        print(f"[submit] generated multiselect: {generated.get('multiselect')}", flush=True)
+        logger.info("Bedrock generated fields for customer: %s", body.get("customerName", ""))
     except Exception as e:
-        import traceback, logging
-        logging.error("generate_fields failed: %s\n%s", e, traceback.format_exc())
+        import traceback
+        logger.error("generate_fields failed: %s\n%s", e, traceback.format_exc())
         generated = {}
 
     fields = {
@@ -48,7 +54,6 @@ def submit():
         "Q&A提取": generated.get("qa", ""),
     }
 
-    # 将多选字段结果写入，格式：["选项名"]
     for field_name, selected in (generated.get("multiselect") or {}).items():
         if field_name in multiselect_fields and selected:
             valid = [s for s in selected if s in multiselect_fields[field_name]]
@@ -57,10 +62,20 @@ def submit():
 
     try:
         record_id = create_record(fields)
+        logger.info(
+            "Record created: %s | customer: %s | creator: %s | issue: %s | cause: %s",
+            record_id,
+            body.get("customerName", ""),
+            body.get("creatorEmail", ""),
+            body.get("userIssue", ""),
+            body.get("issueCause", ""),
+        )
     except RuntimeError as e:
         err = str(e)
         if "AUTH_ERROR" in err or "FEISHU_API_ERROR" in err:
+            logger.error("bitable create_record error: %s", err)
             return jsonify({"success": False, "error": err}), 502
+        logger.error("bitable create_record unexpected error: %s", err)
         return jsonify({"success": False, "error": "INTERNAL_ERROR"}), 500
 
     return jsonify({"success": True, "recordId": record_id}), 200
